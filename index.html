@@ -12,7 +12,7 @@
   --dark:#050508;--card:#0d0d14;
 }
 html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Inter',sans-serif;touch-action:none}
- 
+
 /* INTRO */
 #intro{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #intro.hide{opacity:0;pointer-events:none;transition:opacity 1s}
@@ -25,15 +25,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-fam
 .intro-sub{font-size:11px;letter-spacing:6px;color:#ffffff33;text-transform:uppercase;opacity:0;animation:up 0.8s ease 1.6s forwards}
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes bar{from{width:0;opacity:0}to{width:160px;opacity:1}}
- 
+
 /* CANVAS BG */
 #bgcv{position:fixed;inset:0;z-index:0;pointer-events:none}
- 
+
 /* WALL */
 #scene{position:fixed;inset:0;z-index:5;overflow:hidden}
 #wall{position:absolute;top:0;left:0;cursor:grab;will-change:transform}
 #wall:active{cursor:grabbing}
- 
+
 /* CARDS */
 .card{position:absolute;width:clamp(160px,42vw,210px);background:var(--card);border-radius:12px;padding:16px;transition:transform 0.2s,box-shadow 0.2s;user-select:none;border:1px solid #ffffff08}
 .card:hover{transform:scale(1.04) rotate(0deg)!important;z-index:10;border-color:#ffffff18}
@@ -56,39 +56,39 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-fam
 .rank{position:absolute;top:-10px;right:12px;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;font-weight:700;text-transform:uppercase}
 .newbadge{position:absolute;top:-10px;left:12px;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;font-weight:700;background:#7c3aed;color:#fff;text-transform:uppercase}
 @keyframes cardin{from{opacity:0;transform:translateY(-80px) scale(0.5) rotate(-8deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(var(--rot))}}
- 
+
 /* TOP BAR */
 #topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(var(--dark),transparent);pointer-events:none}
 #logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,4vw,22px);letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tstat{font-size:10px;letter-spacing:2px;color:#ffffff22;text-transform:uppercase}
 .tstat b{color:#fff;font-weight:600}
- 
+
 /* LIVE */
- 
- 
+
+
 /* SEARCH */
 #searchbar{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:51}
 #srch{width:220px;background:#0d0d14;border:1px solid #ffffff10;border-radius:20px;padding:8px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:12px;outline:none;text-align:center;letter-spacing:0.5px;transition:border-color 0.2s}
 #srch:focus{border-color:#0066ff66}
 #srch::placeholder{color:#ffffff22}
- 
+
 /* MAP */
 #mapwrap{position:fixed;bottom:70px;right:12px;z-index:51}
 .maplabel{font-size:8px;letter-spacing:3px;color:#ffffff22;text-transform:uppercase;margin-bottom:3px;text-align:center}
 #mapcv{width:110px;height:65px;border:1px solid #ffffff08;border-radius:6px;display:block;background:#080810}
- 
+
 /* EMPTY */
 #emptystate{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none;display:none}
 #emptystate.show{display:block}
 .es-emoji{font-size:52px;margin-bottom:16px;opacity:0.5}
 .es-t{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
 .es-s{font-size:11px;letter-spacing:3px;color:#ffffff22;text-transform:uppercase}
- 
+
 /* ADD BTN */
 #addbtn{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:51;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:4px;color:#fff;border:none;padding:13px 32px;border-radius:30px;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--pink));text-transform:uppercase;transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;box-shadow:0 4px 24px #0066ff44}
 #addbtn:hover{transform:translateX(-50%) scale(1.04);box-shadow:0 6px 32px #ff2d7844}
 #addbtn:active{transform:translateX(-50%) scale(0.97)}
- 
+
 /* FORM */
 #foverlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:16px}
 #foverlay.show{display:flex}
@@ -108,20 +108,20 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
 .fbtn.go:hover{opacity:0.9}
 .fbtn.no{background:#ffffff08;color:#ffffff44}
 .fbtn.no:hover{background:#ffffff12}
- 
+
 /* BLAST */
 #goldblast{position:fixed;inset:0;z-index:150;pointer-events:none;display:none;align-items:center;justify-content:center}
 #goldblast.show{display:flex}
 #gbtxt{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,44px);letter-spacing:6px;text-align:center;background:linear-gradient(135deg,var(--cyan),var(--blue),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
- 
+
 /* TOAST */
 #toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:300;background:#0d0d14;color:var(--cyan);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;padding:10px 22px;border-radius:20px;border:1px solid #00e5ff33;opacity:0;pointer-events:none;white-space:nowrap;text-transform:uppercase;transition:opacity 0.4s}
 #toast.show{opacity:1}
- 
+
 /* WATERMARK */
 #wm{position:fixed;bottom:72px;left:12px;z-index:51;font-size:10px;letter-spacing:2px;color:#ffffff44;pointer-events:none;line-height:1.9;text-transform:uppercase;font-family:'Bebas Neue',sans-serif}
- 
- 
+
+
 @media(max-width:600px){
   .card{width:calc(100vw - 40px)!important;max-width:340px}
   #topbar{padding:10px 12px}
@@ -139,7 +139,7 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
 </head>
 <body>
 <canvas id="bgcv"></canvas>
- 
+
 <div id="intro">
   <div class="intro-label">India Women Cricket · Fan Tribute</div>
   <div class="intro-name">
@@ -149,9 +149,9 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
   <div class="intro-bar"></div>
   <div class="intro-sub">Fan Hall of Fame · Real Memories · Forever</div>
 </div>
- 
+
 <div id="scene"><div id="wall"></div></div>
- 
+
 <div id="topbar">
   <div id="logo">Hall of Fame</div>
   <div style="display:flex;gap:16px">
@@ -159,28 +159,28 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
     <div class="tstat"><b id="cc">0</b> Countries</div>
   </div>
 </div>
- 
- 
- 
+
+
+
 <div id="searchbar">
   <input id="srch" placeholder="Search memories..." autocomplete="off">
 </div>
- 
+
 <div id="emptystate">
   <div class="es-emoji">🏏</div>
   <div class="es-t">Be The First</div>
   <div class="es-s">Add your memory · Start the wall</div>
 </div>
- 
+
 <div id="mapwrap">
   <div class="maplabel">Fan World Map</div>
   <canvas id="mapcv"></canvas>
 </div>
- 
+
 <div id="wm"><span style="background:linear-gradient(135deg,#00e5ff,#0066ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built by Amyuktha Gummadi</span><br><span style="color:#ffffff33">PitchHER · 2026</span></div>
- 
+
 <button id="addbtn" onclick="openForm()">+ Add Your Memory</button>
- 
+
 <div id="foverlay">
   <div id="fbox">
     <div class="fh">Your Memory</div>
@@ -210,15 +210,15 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
     </div>
   </div>
 </div>
- 
+
 <div id="goldblast"><div id="gbtxt"></div></div>
 <div id="toast"></div>
 <div class="scanline"></div>
- 
+
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getDatabase,ref,push,onValue,runTransaction,query,orderByChild,limitToLast}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
- 
+
 const FB={
   apiKey:"AIzaSyAp3aesnbRWRp6eh3cIyhrKkoQe9qIZlyM",
   authDomain:"smriti-hall-of-fame.firebaseapp.com",
@@ -228,11 +228,11 @@ const FB={
   messagingSenderId:"888616443783",
   appId:"1:888616443783:web:0c7307d8bb6e31bf7dfd22"
 };
- 
+
 const app=initializeApp(FB);
 const db=getDatabase(app);
 const mref=ref(db,'memories');
- 
+
 const TIER_COLORS={pinned:{accent:'linear-gradient(90deg,#fff,#00e5ff,#fff)',av:'#fff',avbg:'#ffffff15'},
   tier1:{accent:'linear-gradient(90deg,#00e5ff,#0066ff)',av:'#00e5ff',avbg:'#00e5ff15'},
   tier2:{accent:'linear-gradient(90deg,#ff2d78,#ff6b35)',av:'#ff2d78',avbg:'#ff2d7815'},
@@ -241,15 +241,15 @@ const TIER_COLORS={pinned:{accent:'linear-gradient(90deg,#fff,#00e5ff,#fff)',av:
 };
 const FMT_C={ODI:{bg:'#0066ff15',c:'#4d9fff',b:'#0066ff33'},T20I:{bg:'#ff2d7815',c:'#ff6b9d',b:'#ff2d7833'},Test:{bg:'#ffffff08',c:'#888',b:'#ffffff15'},WPL:{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},WBBL:{bg:'#ff6b3515',c:'#ff9566',b:'#ff6b3533'},'The Hundred':{bg:'#7c3aed15',c:'#a78bfa',b:'#7c3aed33'},'Personal — How she inspired me':{bg:'#ff2d7815',c:'#ff2d78',b:'#ff2d7833'},'First time I watched her':{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},'Life moment — She was there for me':{bg:'#c9a22715',c:'#c9a227',b:'#c9a22733'},'Fan since day one':{bg:'#1D9E7515',c:'#1D9E75',b:'#1D9E7533'}};
 const CMAP={India:{x:72,y:30},Australia:{x:88,y:58},England:{x:49,y:17},Pakistan:{x:67,y:26},'Sri Lanka':{x:74,y:34},'South Africa':{x:55,y:53},UAE:{x:64,y:29},Bangladesh:{x:76,y:29},'New Zealand':{x:96,y:65},'West Indies':{x:27,y:33},Ireland:{x:46,y:17},USA:{x:18,y:26},Canada:{x:15,y:19},Kenya:{x:62,y:38}};
- 
-let cards=[],ox=0,oy=0,drag=false,lx=0,ly=0,prevTotal=0,countries=new Set();
+
+let cards=[],ox=0,oy=0,drag=false,lx=0,ly=0,prevTotal=0,countries=new Set(),lastData={};
 let loved=new Set();
 try{loved=new Set(JSON.parse(localStorage.getItem('hof_v3')||'[]'))}catch(e){}
- 
+
 const wall=document.getElementById('wall');
- 
+
 function ini(n){return(n||'?').split(' ').map(x=>x[0]||'').join('').toUpperCase().slice(0,2)}
- 
+
 function getTier(h,isNew,rank){
   if(isNew)return'fresh';
   if(rank<3)return'pinned';
@@ -257,7 +257,7 @@ function getTier(h,isNew,rank){
   if(h>=12)return'tier2';
   return'tier3';
 }
- 
+
 function cardPos(idx,total){
   const mob=window.innerWidth<600;
   const cols=mob?2:Math.max(3,Math.ceil(Math.sqrt(Math.max(total,4)*1.5)));
@@ -265,7 +265,7 @@ function cardPos(idx,total){
   const col=idx%cols,row=Math.floor(idx/cols);
   return{x:col*(cw+gap)+(Math.random()-0.5)*8+16,y:row*(250+gap)+(Math.random()-0.5)*6+16};
 }
- 
+
 function buildCard(d,key,idx,isNew){
   const h=d.hearts||0;
   const tier=getTier(h,isNew,idx);
@@ -308,9 +308,9 @@ function buildCard(d,key,idx,isNew){
   wall.appendChild(card);
   return{el:card,key,hearts:h,x:pos.x,y:pos.y};
 }
- 
+
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
- 
+
 function renderAll(data){
   wall.innerHTML='';cards=[];countries.clear();
   const entries=Object.entries(data).sort((a,b)=>(b[1].hearts||0)-(a[1].hearts||0));
@@ -330,7 +330,7 @@ function renderAll(data){
   document.getElementById('emptystate').classList.remove('show');
   centerWall();drawMap();
 }
- 
+
 function centerWall(){
   const mob=window.innerWidth<600;
   if(mob){
@@ -345,8 +345,8 @@ function centerWall(){
   }
   wall.style.transform=`translate(${ox}px,${oy}px)`;
 }
- 
- 
+
+
 window.shareCard=function(key,name,memory){
   const baseUrl=window.location.href.split('?')[0];
   const url=`${baseUrl}?card=${key}`;
@@ -371,7 +371,7 @@ window.heartIt=function(btn,key){
     burst(btn);
   }).catch(()=>showToast('Connection error'));
 };
- 
+
 function burst(el){
   const r=el.getBoundingClientRect();
   for(let i=0;i<12;i++){
@@ -381,10 +381,10 @@ function burst(el){
     p.textContent='♥';document.body.appendChild(p);setTimeout(()=>p.remove(),1100);
   }
 }
- 
+
 window.openForm=function(){document.getElementById('foverlay').classList.add('show');setTimeout(()=>document.getElementById('fn').focus(),100)};
 window.closeForm=function(){document.getElementById('foverlay').classList.remove('show')};
- 
+
 window.submitMemory=function(){
   const name=document.getElementById('fn').value.trim();
   const country=document.getElementById('fc').value.trim();
@@ -401,13 +401,13 @@ window.submitMemory=function(){
       document.getElementById('chc').textContent='0';
     }).catch(e=>{console.error(e);showToast('Error — check connection & retry')});
 };
- 
+
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
 }
- 
+
 function goldExplosion(n){
   const gb=document.getElementById('goldblast');
   document.getElementById('gbtxt').innerHTML=`${n} MEMORIES<br><span style="font-size:0.55em;color:#ffffff44;letter-spacing:4px">The Wall Lives Forever</span>`;
@@ -420,7 +420,7 @@ function goldExplosion(n){
   }
   setTimeout(()=>gb.classList.remove('show'),3500);
 }
- 
+
 // SEARCH
 document.getElementById('srch').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
@@ -430,16 +430,16 @@ document.getElementById('srch').addEventListener('input',e=>{
     c.el.style.transition='opacity 0.25s';
   });
 });
- 
-// DRAG
-wall.addEventListener('mousedown',e=>{if(e.target.closest('button'))return;drag=true;lx=e.clientX;ly=e.clientY;e.preventDefault()});
-window.addEventListener('mousemove',e=>{if(!drag)return;ox+=e.clientX-lx;oy+=e.clientY-ly;lx=e.clientX;ly=e.clientY;wall.style.transform=`translate(${ox}px,${oy}px)`});
-window.addEventListener('mouseup',()=>drag=false);
-wall.addEventListener('touchstart',e=>{if(e.target.closest('button'))return;drag=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY},{passive:true});
-window.addEventListener('touchmove',e=>{if(!drag)return;ox+=e.touches[0].clientX-lx;oy+=e.touches[0].clientY-ly;lx=e.touches[0].clientX;ly=e.touches[0].clientY;wall.style.transform=`translate(${ox}px,${oy}px)`},{passive:true});
-window.addEventListener('touchend',()=>drag=false);
-window.addEventListener('resize',()=>{resizeBG();centerWall()});
- 
+
+// DRAG desktop only
+const isMob=()=>window.innerWidth<=640;
+if(!isMob()){
+  wall.addEventListener('mousedown',e=>{if(e.target.closest('button'))return;drag=true;lx=e.clientX;ly=e.clientY;e.preventDefault()});
+  window.addEventListener('mousemove',e=>{if(!drag)return;ox+=e.clientX-lx;oy+=e.clientY-ly;lx=e.clientX;ly=e.clientY;wall.style.transform=`translate(${ox}px,${oy}px)`});
+  window.addEventListener('mouseup',()=>drag=false);
+}
+window.addEventListener('resize',()=>{resizeBG();renderAll(lastData)});
+
 // MAP
 function drawMap(){
   const mc=document.getElementById('mapcv');
@@ -494,7 +494,7 @@ function drawMap(){
     }
   }
 }
- 
+
 // BG
 const bgcv=document.getElementById('bgcv');
 function resizeBG(){bgcv.width=window.innerWidth;bgcv.height=window.innerHeight}
@@ -518,9 +518,9 @@ const bgpts=Array.from({length:50},()=>({
   });
   requestAnimationFrame(animBG);
 })();
- 
- 
- 
+
+
+
 // FIREBASE
 const q=query(mref,orderByChild('timestamp'),limitToLast(300));
 onValue(q,snap=>{
@@ -538,8 +538,8 @@ onValue(q,snap=>{
   prevTotal=newTotal;
   checkSharedCard();
 },err=>console.error('Firebase error:',err));
- 
- 
+
+
 // Handle shared card URL
 function checkSharedCard(){
   const params=new URLSearchParams(window.location.search);
