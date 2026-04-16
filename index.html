@@ -4,187 +4,170 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Smriti Mandhana — Fan Hall of Fame</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --blue:#0066ff;--pink:#ff2d78;--cyan:#00e5ff;--white:#ffffff;
-  --dark:#050508;--card:#0d0d14;
-}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Inter',sans-serif;touch-action:none}
+:root{--blue:#0066ff;--pink:#ff2d78;--cyan:#00e5ff;--dark:#050508;--card:#0d0d14}
+html,body{width:100%;min-height:100%;background:var(--dark);font-family:'Inter',sans-serif;color:#fff}
 
-/* INTRO */
-#intro{position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#intro.hide{opacity:0;pointer-events:none;transition:opacity 1s}
-.intro-label{font-size:10px;letter-spacing:10px;color:#ffffff22;text-transform:uppercase;opacity:0;animation:up 0.8s ease 0.3s forwards}
-.intro-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,18vw,130px);line-height:0.9;text-align:center;opacity:0;animation:up 0.8s ease 0.7s forwards}
-.intro-name span{display:block}
-.intro-name .n1{color:#fff}
-.intro-name .n2{-webkit-text-stroke:2px var(--cyan);color:transparent}
-.intro-bar{width:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--pink));margin:20px auto;opacity:0;animation:bar 1s ease 1.3s forwards}
-.intro-sub{font-size:11px;letter-spacing:6px;color:#ffffff33;text-transform:uppercase;opacity:0;animation:up 0.8s ease 1.6s forwards}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes bar{from{width:0;opacity:0}to{width:160px;opacity:1}}
+/* ── MOBILE FIRST: normal scroll ── */
+body{overflow-x:hidden;overflow-y:auto}
 
-/* CANVAS BG */
 #bgcv{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-/* WALL */
-#scene{position:fixed;inset:0;z-index:5;overflow:hidden}
-#wall{position:absolute;top:0;left:0;cursor:grab;will-change:transform}
-#wall:active{cursor:grabbing}
-
-/* CARDS */
-.card{position:absolute;width:clamp(160px,42vw,210px);background:var(--card);border-radius:12px;padding:16px;transition:transform 0.2s,box-shadow 0.2s;user-select:none;border:1px solid #ffffff08}
-.card:hover{transform:scale(1.04) rotate(0deg)!important;z-index:10;border-color:#ffffff18}
-.card.pinned{border-color:#fff;box-shadow:0 0 40px #ffffff22,0 0 80px #00e5ff11;transform-origin:center}
-.card.pinned:hover{box-shadow:0 0 60px #ffffff33,0 0 100px #00e5ff22!important}
-.card.tier1{border-color:var(--cyan);box-shadow:0 0 30px #00e5ff18,inset 0 0 20px #00e5ff05}
-.card.tier2{border-color:var(--pink);box-shadow:0 0 20px #ff2d7812}
-.card.tier3{border-color:var(--blue);box-shadow:0 0 16px #0066ff10}
-.card.fresh{border-color:#7c3aed;box-shadow:0 0 20px #7c3aed18}
-.card-accent{height:2px;border-radius:1px;margin-bottom:12px}
-.card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;letter-spacing:1px}
-.fan-name{font-size:13px;font-weight:600;color:#fff;letter-spacing:0.5px}
-.fan-loc{font-size:10px;color:#ffffff44;margin-top:1px;display:flex;align-items:center;gap:4px}
-.card-body{font-size:12px;color:#ffffffaa;line-height:1.75;margin-bottom:12px;max-height:140px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ffffff15 transparent}
-.card-footer{display:flex;align-items:center;justify-content:space-between}
-.fmt{font-size:9px;letter-spacing:2px;padding:3px 9px;border-radius:20px;text-transform:uppercase;font-weight:600}
-.hbtn{font-size:11px;background:none;border:none;cursor:pointer;color:#ffffff33;font-family:'Inter',sans-serif;padding:4px 8px;border-radius:20px;transition:all 0.2s;display:flex;align-items:center;gap:4px}
-.hbtn:hover,.hbtn.loved{color:#ff2d78;background:#ff2d7811}
-.rank{position:absolute;top:-10px;right:12px;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;font-weight:700;text-transform:uppercase}
-.newbadge{position:absolute;top:-10px;left:12px;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;font-weight:700;background:#7c3aed;color:#fff;text-transform:uppercase}
-@keyframes cardin{from{opacity:0;transform:translateY(-80px) scale(0.5) rotate(-8deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(var(--rot))}}
-
-/* TOP BAR */
-#topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(var(--dark),transparent);pointer-events:none}
-#logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,4vw,22px);letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tstat{font-size:10px;letter-spacing:2px;color:#ffffff22;text-transform:uppercase}
+#topbar{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#000e,transparent)}
+#logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tstat{font-size:10px;letter-spacing:2px;color:#ffffff33;text-transform:uppercase}
 .tstat b{color:#fff;font-weight:600}
 
-/* LIVE */
-
-
-/* SEARCH */
-#searchbar{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:51}
-#srch{width:220px;background:#0d0d14;border:1px solid #ffffff10;border-radius:20px;padding:8px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:12px;outline:none;text-align:center;letter-spacing:0.5px;transition:border-color 0.2s}
-#srch:focus{border-color:#0066ff66}
+#searchbar{position:fixed;top:48px;left:50%;transform:translateX(-50%);z-index:50;width:min(220px,60vw)}
+#srch{width:100%;background:rgba(13,13,20,0.95);border:1px solid #ffffff10;border-radius:20px;padding:7px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:12px;outline:none;text-align:center}
 #srch::placeholder{color:#ffffff22}
 
-/* MAP */
-#mapwrap{position:fixed;bottom:70px;right:12px;z-index:51}
-.maplabel{font-size:8px;letter-spacing:3px;color:#ffffff22;text-transform:uppercase;margin-bottom:3px;text-align:center}
-#mapcv{width:110px;height:65px;border:1px solid #ffffff08;border-radius:6px;display:block;background:#080810}
+/* ── CONTENT AREA ── */
+#content{position:relative;z-index:10;padding:95px 14px 90px;min-height:100vh}
 
-/* EMPTY */
-#emptystate{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none;display:none}
-#emptystate.show{display:block}
-.es-emoji{font-size:52px;margin-bottom:16px;opacity:0.5}
-.es-t{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+/* ── CARDS ── */
+.card{width:100%;background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.06);animation:cardin 0.5s ease forwards}
+.card.pinned{border-color:rgba(255,255,255,0.25);box-shadow:0 0 28px rgba(0,229,255,0.08)}
+@keyframes cardin{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card-accent{height:2px;border-radius:1px;margin-bottom:12px}
+.card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.fan-name{font-size:14px;font-weight:600;color:#fff}
+.fan-country{font-size:11px;color:#ffffff44;margin-top:2px}
+.card-body{font-size:13px;color:#ffffffaa;line-height:1.8;margin-bottom:12px;font-style:italic}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fmt{font-size:9px;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;flex-shrink:0;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.hbtn{background:none;border:none;cursor:pointer;color:#ffffff44;font-family:'Inter',sans-serif;font-size:12px;padding:6px 10px;border-radius:20px;transition:all 0.2s;display:flex;align-items:center;gap:4px}
+.hbtn:active{transform:scale(0.95)}
+.hbtn.loved{color:#ff2d78;background:#ff2d7811}
+.sbtn{background:none;border:none;cursor:pointer;color:#ffffff33;font-family:'Inter',sans-serif;font-size:11px;padding:6px 10px;border-radius:20px;transition:all 0.2s}
+.sbtn:active{transform:scale(0.95)}
+.pin-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;letter-spacing:2px;padding:3px 10px;border-radius:10px;background:linear-gradient(135deg,#fff,#00e5ff);color:#000;font-weight:700;margin-bottom:10px;text-transform:uppercase}
+
+/* ── EMPTY STATE ── */
+#empty{text-align:center;padding:80px 20px;display:none}
+#empty.show{display:block}
+.es-icon{font-size:48px;margin-bottom:16px;opacity:0.4}
+.es-t{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
 .es-s{font-size:11px;letter-spacing:3px;color:#ffffff22;text-transform:uppercase}
 
-/* ADD BTN */
-#addbtn{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:51;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:4px;color:#fff;border:none;padding:13px 32px;border-radius:30px;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--pink));text-transform:uppercase;transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;box-shadow:0 4px 24px #0066ff44}
-#addbtn:hover{transform:translateX(-50%) scale(1.04);box-shadow:0 6px 32px #ff2d7844}
+/* ── MAP ── */
+#mapwrap{position:fixed;bottom:68px;right:12px;z-index:50}
+.maplabel{font-size:8px;letter-spacing:2px;color:#ffffff22;text-transform:uppercase;margin-bottom:3px;text-align:center}
+#mapcv{width:100px;height:58px;border:1px solid #ffffff08;border-radius:6px;display:block;background:#080810}
+
+/* ── WATERMARK ── */
+#wm{position:fixed;bottom:68px;left:12px;z-index:50;font-size:9px;letter-spacing:1.5px;pointer-events:none;line-height:1.9;text-transform:uppercase}
+#wm .wm1{background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px}
+#wm .wm2{color:#ffffff22;font-size:9px}
+
+/* ── ADD BTN ── */
+#addbtn{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:50;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:4px;color:#fff;border:none;padding:13px 0;border-radius:30px;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--pink));width:min(320px,calc(100vw - 28px));transition:transform 0.2s;white-space:nowrap;text-align:center}
 #addbtn:active{transform:translateX(-50%) scale(0.97)}
 
-/* FORM */
-#foverlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:16px}
+/* ── FORM ── */
+#foverlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.93);display:none;align-items:flex-end;justify-content:center;padding:0}
 #foverlay.show{display:flex}
-#fbox{background:#0d0d14;border:1px solid #ffffff10;border-radius:16px;padding:clamp(20px,5vw,30px);width:100%;max-width:400px}
-.fh{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;text-align:center;margin-bottom:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.fp{font-size:11px;letter-spacing:3px;color:#ffffff22;text-align:center;margin-bottom:20px;text-transform:uppercase}
-.fi{width:100%;background:#080810;border:1px solid #ffffff0d;border-radius:8px;padding:11px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:13px;margin-bottom:10px;outline:none;transition:border-color 0.2s}
+#fbox{background:#0d0d14;border:1px solid #ffffff10;border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;max-width:500px}
+.fh{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;text-align:center;margin-bottom:4px;background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fp{font-size:11px;letter-spacing:2px;color:#ffffff22;text-align:center;margin-bottom:18px;text-transform:uppercase}
+.fi{width:100%;background:#080810;border:1px solid #ffffff0d;border-radius:10px;padding:12px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;margin-bottom:10px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
 .fi:focus{border-color:#0066ff55}
 .firow{display:flex;gap:8px}
 .firow .fi{flex:1;min-width:0}
-select.fi option{background:#0d0d14;color:#fff}
-textarea.fi{resize:none;height:88px;line-height:1.6}
-.chc{font-size:10px;color:#ffffff22;text-align:right;margin-top:-8px;margin-bottom:10px}
-.fbtns{display:flex;gap:10px;margin-top:6px}
-.fbtn{flex:1;padding:12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;border:none}
+select.fi{appearance:none;-webkit-appearance:none}
+select.fi option{background:#0d0d14}
+textarea.fi{resize:none;height:100px;line-height:1.6}
+.fbtns{display:flex;gap:10px;margin-top:4px}
+.fbtn{flex:1;padding:13px;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.5px;cursor:pointer;border:none;transition:all 0.2s}
 .fbtn.go{background:linear-gradient(135deg,var(--blue),var(--pink));color:#fff}
-.fbtn.go:hover{opacity:0.9}
 .fbtn.no{background:#ffffff08;color:#ffffff44}
-.fbtn.no:hover{background:#ffffff12}
 
-/* BLAST */
-#goldblast{position:fixed;inset:0;z-index:150;pointer-events:none;display:none;align-items:center;justify-content:center}
-#goldblast.show{display:flex}
-#gbtxt{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,44px);letter-spacing:6px;text-align:center;background:linear-gradient(135deg,var(--cyan),var(--blue),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
+/* ── BLAST ── */
+#blast{position:fixed;inset:0;z-index:150;pointer-events:none;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.5)}
+#blast.show{display:flex}
+#blasttxt{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,8vw,44px);letter-spacing:6px;text-align:center;background:linear-gradient(135deg,var(--cyan),var(--blue),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
 
-/* TOAST */
-#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:300;background:#0d0d14;color:var(--cyan);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;padding:10px 22px;border-radius:20px;border:1px solid #00e5ff33;opacity:0;pointer-events:none;white-space:nowrap;text-transform:uppercase;transition:opacity 0.4s}
+/* ── TOAST ── */
+#toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:200;background:#0d0d14;color:var(--cyan);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1px;padding:10px 20px;border-radius:20px;border:1px solid #00e5ff33;opacity:0;pointer-events:none;white-space:nowrap;transition:opacity 0.4s}
 #toast.show{opacity:1}
 
-/* WATERMARK */
-#wm{position:fixed;bottom:72px;left:12px;z-index:51;font-size:10px;letter-spacing:2px;color:#ffffff44;pointer-events:none;line-height:1.9;text-transform:uppercase;font-family:'Bebas Neue',sans-serif}
-
-
-@media(max-width:600px){
-  .card{width:calc(100vw - 40px)!important;max-width:340px}
-  #topbar{padding:10px 12px}
-  #logo{font-size:14px}
-  #searchbar{top:10px;width:calc(100vw - 160px)}
-  #srch{width:100%}
-  #addbtn{width:calc(100vw - 40px);text-align:center}
-  #mapwrap{bottom:70px;right:8px}
-  #wm{bottom:70px;left:8px;font-size:8px}
-}
-.scanline{position:fixed;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00e5ff0a,transparent);animation:scan 8s linear infinite;pointer-events:none;z-index:52}
+.scanline{position:fixed;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00e5ff08,transparent);animation:scan 8s linear infinite;pointer-events:none;z-index:51}
 @keyframes scan{0%{top:-1px}100%{top:100%}}
 @keyframes pfade{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* ── DESKTOP WALL MODE ── */
+@media(min-width:641px){
+  body{overflow:hidden}
+  #content{display:none}
+  #deskscene{display:block!important}
+}
+#deskscene{display:none;position:fixed;inset:0;z-index:5;overflow:hidden;cursor:grab}
+#deskscene:active{cursor:grabbing}
+#deskwall{position:absolute;top:0;left:0;will-change:transform}
 </style>
 </head>
 <body>
 <canvas id="bgcv"></canvas>
 
-<div id="intro">
-  <div class="intro-label">India Women Cricket · Fan Tribute</div>
-  <div class="intro-name">
-    <span class="n1">SMRITI</span>
-    <span class="n2">MANDHANA</span>
+<!-- INTRO -->
+<div id="intro" style="position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+  <div style="font-size:10px;letter-spacing:8px;color:#ffffff22;text-transform:uppercase;opacity:0;animation:cardin 0.8s ease 0.3s forwards">India Women Cricket · Fan Tribute</div>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,16vw,100px);line-height:0.9;text-align:center;opacity:0;animation:cardin 0.8s ease 0.7s forwards">
+    <div style="color:#fff;letter-spacing:6px">SMRITI</div>
+    <div style="letter-spacing:6px;-webkit-text-stroke:2px #00e5ff;color:transparent">MANDHANA</div>
   </div>
-  <div class="intro-bar"></div>
-  <div class="intro-sub">Fan Hall of Fame · Real Memories · Forever</div>
+  <div style="width:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--pink));opacity:0;animation:lineg 1s ease 1.3s forwards;margin:12px 0"></div>
+  <div style="font-size:11px;letter-spacing:5px;color:#ffffff33;text-transform:uppercase;opacity:0;animation:cardin 0.8s ease 1.6s forwards">Fan Hall of Fame</div>
 </div>
+<style>@keyframes lineg{from{width:0;opacity:0}to{width:160px;opacity:1}}</style>
 
-<div id="scene"><div id="wall"></div></div>
-
+<!-- TOP BAR -->
 <div id="topbar">
   <div id="logo">Hall of Fame</div>
-  <div style="display:flex;gap:16px">
+  <div style="display:flex;gap:14px">
     <div class="tstat"><b id="tc">0</b> Memories</div>
     <div class="tstat"><b id="cc">0</b> Countries</div>
   </div>
 </div>
 
+<!-- SEARCH -->
+<div id="searchbar"><input id="srch" placeholder="Search memories..." autocomplete="off"></div>
 
-
-<div id="searchbar">
-  <input id="srch" placeholder="Search memories..." autocomplete="off">
+<!-- MOBILE CONTENT -->
+<div id="content">
+  <div id="cardlist"></div>
+  <div id="empty">
+    <div class="es-icon">🏏</div>
+    <div class="es-t">Be The First</div>
+    <div class="es-s">Add your memory · Start the wall</div>
+  </div>
 </div>
 
-<div id="emptystate">
-  <div class="es-emoji">🏏</div>
-  <div class="es-t">Be The First</div>
-  <div class="es-s">Add your memory · Start the wall</div>
-</div>
+<!-- DESKTOP WALL -->
+<div id="deskscene"><div id="deskwall"></div></div>
 
+<!-- MAP + WATERMARK -->
 <div id="mapwrap">
   <div class="maplabel">Fan World Map</div>
   <canvas id="mapcv"></canvas>
 </div>
+<div id="wm">
+  <div class="wm1">Amyuktha Gummadi</div>
+  <div class="wm2">PitchHER · 2026</div>
+</div>
 
-<div id="wm"><span style="background:linear-gradient(135deg,#00e5ff,#0066ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Built by Amyuktha Gummadi</span><br><span style="color:#ffffff33">PitchHER · 2026</span></div>
-
+<!-- ADD BTN -->
 <button id="addbtn" onclick="openForm()">+ Add Your Memory</button>
 
+<!-- FORM -->
 <div id="foverlay">
   <div id="fbox">
     <div class="fh">Your Memory</div>
-    <div class="fp">A match · A moment · A feeling · Anything ♥</div>
+    <div class="fp">A match · A moment · A feeling</div>
     <div class="firow">
       <input class="fi" id="fn" placeholder="Your name" maxlength="30">
       <input class="fi" id="fc" placeholder="Country" maxlength="20">
@@ -202,8 +185,7 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
       <option>Life moment — She was there for me</option>
       <option>Fan since day one</option>
     </select>
-    <textarea class="fi" id="fm" placeholder="Your memory... a match moment, how she inspired you, a life moment — anything ♥" oninput="document.getElementById('chc').textContent=this.value.length"></textarea>
-    
+    <textarea class="fi" id="fm" placeholder="Your story... a match memory, how she inspired you, anything ♥"></textarea>
     <div class="fbtns">
       <button class="fbtn no" onclick="closeForm()">Cancel</button>
       <button class="fbtn go" onclick="submitMemory()">Submit →</button>
@@ -211,7 +193,7 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
   </div>
 </div>
 
-<div id="goldblast"><div id="gbtxt"></div></div>
+<div id="blast"><div id="blasttxt"></div></div>
 <div id="toast"></div>
 <div class="scanline"></div>
 
@@ -219,168 +201,153 @@ textarea.fi{resize:none;height:88px;line-height:1.6}
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getDatabase,ref,push,onValue,runTransaction,query,orderByChild,limitToLast}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-const FB={
-  apiKey:"AIzaSyAp3aesnbRWRp6eh3cIyhrKkoQe9qIZlyM",
-  authDomain:"smriti-hall-of-fame.firebaseapp.com",
-  databaseURL:"https://smriti-hall-of-fame-default-rtdb.firebaseio.com",
-  projectId:"smriti-hall-of-fame",
-  storageBucket:"smriti-hall-of-fame.firebasestorage.app",
-  messagingSenderId:"888616443783",
-  appId:"1:888616443783:web:0c7307d8bb6e31bf7dfd22"
-};
-
+const FB={apiKey:"AIzaSyAp3aesnbRWRp6eh3cIyhrKkoQe9qIZlyM",authDomain:"smriti-hall-of-fame.firebaseapp.com",databaseURL:"https://smriti-hall-of-fame-default-rtdb.firebaseio.com",projectId:"smriti-hall-of-fame",storageBucket:"smriti-hall-of-fame.firebasestorage.app",messagingSenderId:"888616443783",appId:"1:888616443783:web:0c7307d8bb6e31bf7dfd22"};
 const app=initializeApp(FB);
 const db=getDatabase(app);
 const mref=ref(db,'memories');
 
-const TIER_COLORS={pinned:{accent:'linear-gradient(90deg,#fff,#00e5ff,#fff)',av:'#fff',avbg:'#ffffff15'},
-  tier1:{accent:'linear-gradient(90deg,#00e5ff,#0066ff)',av:'#00e5ff',avbg:'#00e5ff15'},
-  tier2:{accent:'linear-gradient(90deg,#ff2d78,#ff6b35)',av:'#ff2d78',avbg:'#ff2d7815'},
-  tier3:{accent:'linear-gradient(90deg,#0066ff,#7c3aed)',av:'#0066ff',avbg:'#0066ff15'},
-  fresh:{accent:'linear-gradient(90deg,#7c3aed,#0066ff)',av:'#7c3aed',avbg:'#7c3aed15'},
-};
-const FMT_C={ODI:{bg:'#0066ff15',c:'#4d9fff',b:'#0066ff33'},T20I:{bg:'#ff2d7815',c:'#ff6b9d',b:'#ff2d7833'},Test:{bg:'#ffffff08',c:'#888',b:'#ffffff15'},WPL:{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},WBBL:{bg:'#ff6b3515',c:'#ff9566',b:'#ff6b3533'},'The Hundred':{bg:'#7c3aed15',c:'#a78bfa',b:'#7c3aed33'},'Personal — How she inspired me':{bg:'#ff2d7815',c:'#ff2d78',b:'#ff2d7833'},'First time I watched her':{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},'Life moment — She was there for me':{bg:'#c9a22715',c:'#c9a227',b:'#c9a22733'},'Fan since day one':{bg:'#1D9E7515',c:'#1D9E75',b:'#1D9E7533'}};
-const CMAP={India:{x:72,y:30},Australia:{x:88,y:58},England:{x:49,y:17},Pakistan:{x:67,y:26},'Sri Lanka':{x:74,y:34},'South Africa':{x:55,y:53},UAE:{x:64,y:29},Bangladesh:{x:76,y:29},'New Zealand':{x:96,y:65},'West Indies':{x:27,y:33},Ireland:{x:46,y:17},USA:{x:18,y:26},Canada:{x:15,y:19},Kenya:{x:62,y:38}};
+const FMT={ODI:{bg:'#0066ff15',c:'#4d9fff',b:'#0066ff33'},T20I:{bg:'#ff2d7815',c:'#ff6b9d',b:'#ff2d7833'},Test:{bg:'#ffffff08',c:'#888',b:'#ffffff15'},WPL:{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},WBBL:{bg:'#ff6b3515',c:'#ff9566',b:'#ff6b3533'},'The Hundred':{bg:'#7c3aed15',c:'#a78bfa',b:'#7c3aed33'},'Personal — How she inspired me':{bg:'#ff2d7815',c:'#ff6b9d',b:'#ff2d7833'},'First time I watched her':{bg:'#00e5ff15',c:'#00e5ff',b:'#00e5ff33'},'Life moment — She was there for me':{bg:'#c9a22715',c:'#f5c842',b:'#c9a22733'},'Fan since day one':{bg:'#1D9E7515',c:'#4ade80',b:'#1D9E7533'}};
+const AVC=['#00e5ff','#0066ff','#ff2d78','#1D9E75','#7c3aed','#ff6b35','#f5c842'];
+const ACCENTS=['linear-gradient(90deg,#00e5ff,#0066ff)','linear-gradient(90deg,#ff2d78,#ff6b35)','linear-gradient(90deg,#0066ff,#7c3aed)','linear-gradient(90deg,#1D9E75,#00e5ff)'];
+const CMAP={India:{x:72,y:30},Australia:{x:88,y:58},England:{x:49,y:17},Pakistan:{x:67,y:26},'Sri Lanka':{x:74,y:34},'South Africa':{x:55,y:53},UAE:{x:64,y:29},Bangladesh:{x:76,y:29},'New Zealand':{x:96,y:65},'West Indies':{x:27,y:33},Ireland:{x:46,y:17},USA:{x:18,y:26},Canada:{x:15,y:19}};
 
-let cards=[],ox=0,oy=0,drag=false,lx=0,ly=0,prevTotal=0,countries=new Set(),lastData={};
-let loved=new Set();
-try{loved=new Set(JSON.parse(localStorage.getItem('hof_v3')||'[]'))}catch(e){}
-
-const wall=document.getElementById('wall');
+let loved=new Set(),prevTotal=0,allData={},countries=new Set(),deskCards=[];
+try{loved=new Set(JSON.parse(localStorage.getItem('hof_loved')||'[]'))}catch(e){}
 
 function ini(n){return(n||'?').split(' ').map(x=>x[0]||'').join('').toUpperCase().slice(0,2)}
-
-function getTier(h,isNew,rank){
-  if(isNew)return'fresh';
-  if(rank<3)return'pinned';
-  if(h>=25)return'tier1';
-  if(h>=12)return'tier2';
-  return'tier3';
-}
-
-function cardPos(idx,total){
-  const mob=window.innerWidth<600;
-  const cols=mob?2:Math.max(3,Math.ceil(Math.sqrt(Math.max(total,4)*1.5)));
-  const cw=mob?175:220,gap=mob?12:22;
-  const col=idx%cols,row=Math.floor(idx/cols);
-  return{x:col*(cw+gap)+(Math.random()-0.5)*8+16,y:row*(250+gap)+(Math.random()-0.5)*6+16};
-}
-
-function buildCard(d,key,idx,isNew){
-  const h=d.hearts||0;
-  const tier=getTier(h,isNew,idx);
-  const tc=TIER_COLORS[tier];
-  const fc=FMT_C[d.format]||FMT_C.Test;
-  const rot=(Math.random()-0.5)*3;
-  const card=document.createElement('div');
-  card.className=`card ${tier}`;
-  card.style.setProperty('--rot',rot+'deg');
-  if(tier==='pinned'){const rankNum=idx+1;card.innerHTML+=`<div class="rank" style="background:linear-gradient(135deg,#fff,#00e5ff);color:#000;font-size:9px">&#x1F451; PINNED #${rankNum}</div>`;}
-  else if(h>=25)card.innerHTML+=`<div class="rank" style="background:linear-gradient(135deg,#00e5ff,#0066ff);color:#000">★ Top Memory</div>`;
-  else if(isNew)card.innerHTML+=`<div class="newbadge">New</div>`;
-  card.innerHTML+=`
-    <div class="card-accent" style="background:${tc.accent}"></div>
-    <div class="card-top">
-      <div class="av" style="background:${tc.avbg};color:${tc.av}">${ini(d.name)}</div>
-      <div>
-        <div class="fan-name">${esc(d.name)}</div>
-        <div class="fan-loc">
-          <span style="font-size:10px;opacity:0.5">📍</span>
-          ${esc(d.country||'World')}
-        </div>
-      </div>
-    </div>
-    <div class="card-body">"${esc(d.memory)}"</div>
-    <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-      <span class="fmt" style="background:${fc.bg};color:${fc.c};border:1px solid ${fc.b};max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(d.format||'Cricket').split(' — ')[0]}</span>
-      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-        <button class="hbtn${loved.has(key)?' loved':''}" onclick="heartIt(this,'${key}')" style="padding:4px 8px">
-          <span style="font-size:13px">&#9825;</span> <span class="hc">${h}</span>
-        </button>
-        <button class="hbtn" onclick="shareCard('${key}','${encodeURIComponent(d.name)}','${encodeURIComponent(d.memory.slice(0,80))}')" style="padding:4px 8px;color:#ffffff55;font-size:11px;letter-spacing:1px" title="Share">
-          Share
-        </button>
-      </div>
-    </div>`;
-  const pos=cardPos(idx,Math.max(cards.length,4));
-  card.style.cssText+=`left:${pos.x}px;top:${pos.y}px;transform:rotate(${rot}deg)`;
-  if(isNew)card.style.animation=`cardin 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards`;
-  wall.appendChild(card);
-  return{el:card,key,hearts:h,x:pos.x,y:pos.y};
-}
-
+function avc(n){let h=0;for(const c of(n||''))h+=c.charCodeAt(0);return AVC[h%AVC.length]}
+function acc(n){let h=0;for(const c of(n||''))h+=c.charCodeAt(0);return ACCENTS[h%ACCENTS.length]}
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function fc(fmt){return FMT[fmt]||FMT.Test}
+function shortFmt(f){return(f||'Cricket').split(' \u2014')[0]}
+
+const isMobile=()=>window.innerWidth<=640;
+
+// ── MOBILE RENDER ──
+function renderMobile(entries){
+  const list=document.getElementById('cardlist');
+  const empty=document.getElementById('empty');
+  list.innerHTML='';
+  if(!entries.length){empty.classList.add('show');return;}
+  empty.classList.remove('show');
+  entries.forEach(([k,d],i)=>{
+    const h=d.hearts||0;
+    const f=fc(d.format);
+    const color=avc(d.name);
+    const accentBg=acc(d.name);
+    const isPinned=i<3&&entries.length>=3;
+    const card=document.createElement('div');
+    card.className='card'+(isPinned?' pinned':'');
+    card.style.animationDelay=(i*0.05)+'s';
+    card.innerHTML=
+      (isPinned?`<div class="pin-badge">&#x1F451; Pinned #${i+1}</div>`:'')
+      +`<div class="card-accent" style="background:${accentBg}"></div>`
+      +`<div class="card-top">`
+      +`<div class="av" style="background:${color}22;color:${color}">${ini(d.name)}</div>`
+      +`<div><div class="fan-name">${esc(d.name)}</div><div class="fan-country">&#128205; ${esc(d.country||'World')}</div></div>`
+      +`</div>`
+      +`<div class="card-body">"${esc(d.memory)}"</div>`
+      +`<div class="card-footer">`
+      +`<span class="fmt" style="background:${f.bg};color:${f.c};border:1px solid ${f.b}">${shortFmt(d.format)}</span>`
+      +`<div class="card-actions">`
+      +`<button class="hbtn${loved.has(k)?' loved':''}" onclick="heartIt(this,'${k}')">&#9825; <span>${h}</span></button>`
+      +`<button class="sbtn" onclick="shareCard('${k}','${encodeURIComponent(d.name)}','${encodeURIComponent(d.memory.slice(0,80))}')">Share</button>`
+      +`</div></div>`;
+    list.appendChild(card);
+  });
+}
+
+// ── DESKTOP RENDER ──
+function renderDesktop(entries){
+  const wall=document.getElementById('deskwall');
+  wall.innerHTML='';deskCards=[];
+  const cols=Math.max(3,Math.ceil(Math.sqrt(Math.max(entries.length,4)*1.5)));
+  const cw=210,gap=22;
+  entries.forEach(([k,d],i)=>{
+    const h=d.hearts||0;
+    const f=fc(d.format);
+    const color=avc(d.name);
+    const accentBg=acc(d.name);
+    const isPinned=i<3&&entries.length>=3;
+    const col=i%cols,row=Math.floor(i/cols);
+    const rot=(Math.random()-0.5)*3;
+    const x=col*(cw+gap)+(Math.random()-0.5)*6;
+    const y=row*(260+gap)+(Math.random()-0.5)*6;
+    const card=document.createElement('div');
+    card.style.cssText=`position:absolute;width:${cw}px;background:#0d0d14;border-radius:12px;padding:14px;border:1px solid ${isPinned?'rgba(255,255,255,0.25)':'rgba(255,255,255,0.06)'};left:${x}px;top:${y}px;transform:rotate(${rot}deg);transition:transform 0.2s,box-shadow 0.2s;${isPinned?'box-shadow:0 0 28px rgba(0,229,255,0.1)':''}`;
+    card.innerHTML=
+      (isPinned?`<div style="position:absolute;top:-9px;right:10px;font-size:8px;letter-spacing:2px;padding:3px 10px;border-radius:10px;background:linear-gradient(135deg,#fff,#00e5ff);color:#000;font-weight:700">PINNED #${i+1}</div>`:'')
+      +`<div style="height:2px;border-radius:1px;background:${accentBg};margin-bottom:10px"></div>`
+      +`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">`
+      +`<div style="width:32px;height:32px;border-radius:50%;background:${color}22;color:${color};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${ini(d.name)}</div>`
+      +`<div><div style="font-size:12px;font-weight:600;color:#fff">${esc(d.name)}</div><div style="font-size:10px;color:#ffffff44">&#128205; ${esc(d.country||'World')}</div></div></div>`
+      +`<div style="font-size:11px;color:#ffffffaa;line-height:1.7;margin-bottom:10px;font-style:italic;max-height:110px;overflow-y:auto">"${esc(d.memory)}"</div>`
+      +`<div style="display:flex;align-items:center;justify-content:space-between;gap:6px">`
+      +`<span style="font-size:8px;letter-spacing:1.5px;padding:3px 8px;border-radius:20px;font-weight:600;background:${f.bg};color:${f.c};border:1px solid ${f.b};max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase">${shortFmt(d.format)}</span>`
+      +`<div style="display:flex;gap:4px">`
+      +`<button onclick="heartIt(this,'${k}')" style="background:${loved.has(k)?'#ff2d7811':'none'};border:none;cursor:pointer;color:${loved.has(k)?'#ff2d78':'#ffffff44'};font-size:11px;padding:3px 7px;border-radius:20px;font-family:Inter,sans-serif">&#9825; <span>${h}</span></button>`
+      +`<button onclick="shareCard('${k}','${encodeURIComponent(d.name)}','${encodeURIComponent(d.memory.slice(0,80))}')" style="background:none;border:none;cursor:pointer;color:#ffffff22;font-size:10px;padding:3px 7px;font-family:Inter,sans-serif">Share</button>`
+      +`</div></div>`;
+    wall.appendChild(card);
+    deskCards.push({el:card,key:k,x,y});
+  });
+  // center
+  const totalW=cols*(cw+gap);
+  const ox=Math.max((window.innerWidth-totalW)/2,20);
+  wall.style.transform=`translate(${ox}px,90px)`;
+  // setup drag
+  setupDeskDrag(ox,90);
+}
+
+let dox=0,doy=0;
+function setupDeskDrag(ox,oy){
+  dox=ox;doy=oy;
+  const wall=document.getElementById('deskwall');
+  let drag=false,lx=0,ly=0;
+  const scene=document.getElementById('deskscene');
+  scene.onmousedown=e=>{if(e.target.closest('button'))return;drag=true;lx=e.clientX;ly=e.clientY;e.preventDefault()};
+  window.onmousemove=e=>{if(!drag)return;dox+=e.clientX-lx;doy+=e.clientY-ly;lx=e.clientX;ly=e.clientY;wall.style.transform=`translate(${dox}px,${doy}px)`};
+  window.onmouseup=()=>drag=false;
+}
 
 function renderAll(data){
-  wall.innerHTML='';cards=[];countries.clear();
+  allData=data;countries.clear();
   const entries=Object.entries(data).sort((a,b)=>(b[1].hearts||0)-(a[1].hearts||0));
-  entries.forEach(([k,d],i)=>{
-    cards.push(buildCard(d,k,i,false));
-    if(d.country)countries.add(d.country);
-  });
-  // Add pinned label if 3+ cards
-  if(entries.length>=3){
-    const lbl=document.createElement('div');
-    lbl.style.cssText='position:absolute;top:-28px;left:0;font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:4px;color:#ffffff22;text-transform:uppercase';
-    lbl.textContent='\u{1F451} Top Memories — Auto Pinned by Fans';
-    wall.appendChild(lbl);
-  }
+  entries.forEach(([k,d])=>{if(d.country)countries.add(d.country)});
   document.getElementById('tc').textContent=entries.length;
   document.getElementById('cc').textContent=countries.size;
-  document.getElementById('emptystate').classList.remove('show');
-  centerWall();drawMap();
+  if(isMobile())renderMobile(entries);
+  else renderDesktop(entries);
+  drawMap();
 }
 
-function centerWall(){
-  const mob=window.innerWidth<600;
-  if(mob){
-    const cw=Math.min(window.innerWidth-40,340);
-    ox=(window.innerWidth-cw)/2;
-    oy=95;
-  } else {
-    const cols=Math.max(3,Math.ceil(Math.sqrt(Math.max(cards.length,4)*1.5)));
-    const cw=210,gap=22;
-    const tw=cols*(cw+gap)+16;
-    ox=Math.max((window.innerWidth-tw)/2,20);oy=95;
-  }
-  wall.style.transform=`translate(${ox}px,${oy}px)`;
-}
-
-
-window.shareCard=function(key,name,memory){
-  const baseUrl=window.location.href.split('?')[0];
-  const url=`${baseUrl}?card=${key}`;
-  const text=`"${decodeURIComponent(memory)}..." — ${decodeURIComponent(name)} on Smriti Mandhana Fan Hall of Fame`;
-  if(navigator.share){
-    navigator.share({title:'Smriti Mandhana — Fan Hall of Fame',text,url}).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(url).then(()=>showToast('Link copied! Share it ↗')).catch(()=>{
-      // fallback
-      const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-      showToast('Link copied! Share it ↗');
-    });
-  }
-};
 window.heartIt=function(btn,key){
-  if(loved.has(key)){showToast('Already loved ♥');return;}
+  if(loved.has(key)){showToast('Already loved &#9825;');return;}
   runTransaction(ref(db,`memories/${key}/hearts`),c=>(c||0)+1).then(()=>{
     loved.add(key);
-    try{localStorage.setItem('hof_v3',JSON.stringify([...loved]))}catch(e){}
-    btn.classList.add('loved');
-    const sp=btn.querySelector('.hc');if(sp)sp.textContent=parseInt(sp.textContent)+1;
+    try{localStorage.setItem('hof_loved',JSON.stringify([...loved]))}catch(e){}
+    btn.classList.add('loved');btn.style.color='#ff2d78';btn.style.background='#ff2d7811';
+    const sp=btn.querySelector('span');if(sp)sp.textContent=parseInt(sp.textContent)+1;
     burst(btn);
-  }).catch(()=>showToast('Connection error'));
+  }).catch(()=>showToast('Try again'));
 };
 
 function burst(el){
   const r=el.getBoundingClientRect();
-  for(let i=0;i<12;i++){
+  for(let i=0;i<10;i++){
     const p=document.createElement('div');
-    const colors=['#ff2d78','#00e5ff','#0066ff','#fff'];
-    p.style.cssText=`position:fixed;left:${r.left+r.width/2}px;top:${r.top}px;font-size:${10+Math.random()*6}px;color:${colors[Math.floor(Math.random()*colors.length)]};pointer-events:none;z-index:999;animation:pfade 0.9s ease-out ${Math.random()*0.2}s forwards;--dx:${(Math.random()-0.5)*80}px;--dy:${-(20+Math.random()*60)}px`;
-    p.textContent='♥';document.body.appendChild(p);setTimeout(()=>p.remove(),1100);
+    const c=['#ff2d78','#00e5ff','#0066ff','#fff'][i%4];
+    p.style.cssText=`position:fixed;left:${r.left+r.width/2}px;top:${r.top}px;font-size:${10+Math.random()*6}px;color:${c};pointer-events:none;z-index:999;animation:pfade 0.9s ease-out ${Math.random()*0.2}s forwards;--dx:${(Math.random()-0.5)*80}px;--dy:${-(20+Math.random()*60)}px`;
+    p.textContent='&#9825;';document.body.appendChild(p);setTimeout(()=>p.remove(),1100);
   }
 }
+
+window.shareCard=function(key,name,memory){
+  const base=window.location.href.split('?')[0];
+  const url=`${base}?card=${key}`;
+  if(navigator.share){navigator.share({title:'Smriti Mandhana — Fan Hall of Fame',text:`"${decodeURIComponent(memory)}..." — ${decodeURIComponent(name)}`,url}).catch(()=>{})}
+  else{navigator.clipboard.writeText(url).then(()=>showToast('Link copied! &#8599;')).catch(()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('Link copied! &#8599;')})}
+};
 
 window.openForm=function(){document.getElementById('foverlay').classList.add('show');setTimeout(()=>document.getElementById('fn').focus(),100)};
 window.closeForm=function(){document.getElementById('foverlay').classList.remove('show')};
@@ -391,183 +358,56 @@ window.submitMemory=function(){
   const format=document.getElementById('ff').value;
   const memory=document.getElementById('fm').value.trim();
   if(!name){showToast('Enter your name');return;}
-  if(!format){showToast('Pick a format');return;}
+  if(!format){showToast('Pick a memory type');return;}
   if(memory.length<10){showToast('Tell us a bit more');return;}
   push(mref,{name,country:country||'World',format,memory,hearts:1,timestamp:Date.now()})
-    .then(()=>{
-      closeForm();showToast('Your memory is on the wall! ✦');
-      ['fn','fc','fm'].forEach(id=>document.getElementById(id).value='');
-      document.getElementById('ff').value='';
-      document.getElementById('chc').textContent='0';
-    }).catch(e=>{console.error(e);showToast('Error — check connection & retry')});
+    .then(()=>{closeForm();showToast('Your memory is on the wall! &#10022;');['fn','fc','fm'].forEach(id=>document.getElementById(id).value='');document.getElementById('ff').value=''})
+    .catch(e=>{console.error(e);showToast('Error — check connection')});
 };
 
 function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  const t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
 function goldExplosion(n){
-  const gb=document.getElementById('goldblast');
-  document.getElementById('gbtxt').innerHTML=`${n} MEMORIES<br><span style="font-size:0.55em;color:#ffffff44;letter-spacing:4px">The Wall Lives Forever</span>`;
-  gb.classList.add('show');
-  for(let i=0;i<30;i++){
-    const colors=['#00e5ff','#0066ff','#ff2d78','#fff'];
-    const p=document.createElement('div');
-    p.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:${Math.random()*100}vh;width:${3+Math.random()*7}px;height:${3+Math.random()*7}px;background:${colors[i%4]};border-radius:50%;pointer-events:none;z-index:151;animation:pfade 2.5s ease-out ${Math.random()*0.8}s forwards;--dx:${(Math.random()-0.5)*140}px;--dy:${(Math.random()-0.5)*140}px`;
-    document.body.appendChild(p);setTimeout(()=>p.remove(),3300);
-  }
-  setTimeout(()=>gb.classList.remove('show'),3500);
+  const b=document.getElementById('blast');
+  document.getElementById('blasttxt').innerHTML=`${n} MEMORIES<br><span style="font-size:0.5em;color:#ffffff44;letter-spacing:4px">The Wall Lives Forever</span>`;
+  b.classList.add('show');
+  for(let i=0;i<24;i++){const p=document.createElement('div');const c=['#00e5ff','#0066ff','#ff2d78','#fff'][i%4];p.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:${Math.random()*100}vh;width:${3+Math.random()*7}px;height:${3+Math.random()*7}px;background:${c};border-radius:50%;pointer-events:none;z-index:151;animation:pfade 2.5s ease-out ${Math.random()*0.8}s forwards;--dx:${(Math.random()-0.5)*140}px;--dy:${(Math.random()-0.5)*140}px`;document.body.appendChild(p);setTimeout(()=>p.remove(),3300)}
+  setTimeout(()=>b.classList.remove('show'),3500);
 }
 
-// SEARCH
 document.getElementById('srch').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
-  cards.forEach(c=>{
-    const m=!q||c.el.textContent.toLowerCase().includes(q);
-    c.el.style.opacity=m?'1':'0.07';
-    c.el.style.transition='opacity 0.25s';
-  });
+  const cards=isMobile()?document.querySelectorAll('#cardlist .card'):document.querySelectorAll('#deskwall div[style]');
+  cards.forEach(c=>{const m=!q||c.textContent.toLowerCase().includes(q);c.style.opacity=m?'1':'0.08';c.style.transition='opacity 0.25s'});
 });
 
-// DRAG desktop only
-const isMob=()=>window.innerWidth<=640;
-if(!isMob()){
-  wall.addEventListener('mousedown',e=>{if(e.target.closest('button'))return;drag=true;lx=e.clientX;ly=e.clientY;e.preventDefault()});
-  window.addEventListener('mousemove',e=>{if(!drag)return;ox+=e.clientX-lx;oy+=e.clientY-ly;lx=e.clientX;ly=e.clientY;wall.style.transform=`translate(${ox}px,${oy}px)`});
-  window.addEventListener('mouseup',()=>drag=false);
-}
-window.addEventListener('resize',()=>{resizeBG();renderAll(lastData)});
-
-// MAP
 function drawMap(){
-  const mc=document.getElementById('mapcv');
-  mc.width=220;mc.height=110;
-  mc.style.width='110px';mc.style.height='55px';
-  const ctx=mc.getContext('2d');
-  ctx.fillStyle='#080810';ctx.fillRect(0,0,220,110);
-  // Draw simplified continent dots grid
-  const dots=[
-    // Europe
-    [96,28],[100,26],[104,24],[108,26],[102,30],
-    // Asia
-    [120,22],[130,20],[140,22],[148,26],[150,30],[145,35],[138,32],[128,28],
-    // India highlight
-    [136,38],[138,42],[134,44],
-    // Africa
-    [104,38],[108,44],[106,50],[110,54],[104,48],
-    // North America
-    [32,22],[38,26],[44,30],[36,34],[30,28],
-    // South America
-    [50,50],[54,56],[48,60],[52,64],
-    // Australia
-    [168,58],[172,62],[166,64],[176,60],
-    // UK/Ireland
-    [94,22],[92,24],
-    // SE Asia/SL
-    [148,42],[150,46],
-  ];
-  dots.forEach(([x,y])=>{
-    ctx.beginPath();ctx.arc(x,y,1.2,0,Math.PI*2);
-    ctx.fillStyle='#ffffff15';ctx.fill();
-  });
-  // Glow dots for fan countries
-  countries.forEach(c=>{
-    const co=CMAP[c];if(!co)return;
-    const px=co.x/100*220,py=co.y/100*110;
-    const grad=ctx.createRadialGradient(px,py,0,px,py,10);
-    grad.addColorStop(0,'#00e5ffaa');grad.addColorStop(1,'transparent');
-    ctx.beginPath();ctx.arc(px,py,10,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
-    ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);
-    ctx.fillStyle='#00e5ff';ctx.globalAlpha=1;ctx.fill();ctx.globalAlpha=1;
-  });
-  // Draw connecting lines between fan countries
-  const fanCoords=[...countries].map(c=>CMAP[c]).filter(Boolean);
-  if(fanCoords.length>1){
-    ctx.strokeStyle='#00e5ff18';ctx.lineWidth=0.5;
-    for(let i=0;i<fanCoords.length-1;i++){
-      ctx.beginPath();
-      ctx.moveTo(fanCoords[i].x/100*220,fanCoords[i].y/100*110);
-      ctx.lineTo(fanCoords[i+1].x/100*220,fanCoords[i+1].y/100*110);
-      ctx.stroke();
-    }
-  }
+  const mc=document.getElementById('mapcv');mc.width=100;mc.height=58;
+  const ctx=mc.getContext('2d');ctx.fillStyle='#080810';ctx.fillRect(0,0,100,58);
+  countries.forEach(c=>{const co=CMAP[c];if(!co)return;const px=co.x/100*100,py=co.y/100*58;const g=ctx.createRadialGradient(px,py,0,px,py,8);g.addColorStop(0,'#00e5ffaa');g.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#00e5ff';ctx.globalAlpha=0.95;ctx.fill();ctx.globalAlpha=1});
 }
 
-// BG
 const bgcv=document.getElementById('bgcv');
-function resizeBG(){bgcv.width=window.innerWidth;bgcv.height=window.innerHeight}
-resizeBG();
+function resizeBG(){bgcv.width=window.innerWidth;bgcv.height=window.innerHeight}resizeBG();
+window.addEventListener('resize',resizeBG);
 const bgctx=bgcv.getContext('2d');
-const bgpts=Array.from({length:50},()=>({
-  x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
-  vx:(Math.random()-0.5)*0.12,vy:(Math.random()-0.5)*0.12,
-  r:Math.random()*1.5+0.3,
-  col:['#0066ff','#00e5ff','#ff2d78'][Math.floor(Math.random()*3)],
-  a:Math.random()*0.18+0.03
-}));
-(function animBG(){
-  bgctx.clearRect(0,0,bgcv.width,bgcv.height);
-  bgpts.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=bgcv.width;if(p.x>bgcv.width)p.x=0;
-    if(p.y<0)p.y=bgcv.height;if(p.y>bgcv.height)p.y=0;
-    bgctx.beginPath();bgctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    bgctx.fillStyle=p.col;bgctx.globalAlpha=p.a;bgctx.fill();bgctx.globalAlpha=1;
-  });
-  requestAnimationFrame(animBG);
-})();
+const bgpts=Array.from({length:50},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-0.5)*0.12,vy:(Math.random()-0.5)*0.12,r:Math.random()*1.5+0.3,col:['#0066ff','#00e5ff','#ff2d78'][Math.floor(Math.random()*3)],a:Math.random()*0.15+0.03}));
+(function animBG(){bgctx.clearRect(0,0,bgcv.width,bgcv.height);bgpts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=bgcv.width;if(p.x>bgcv.width)p.x=0;if(p.y<0)p.y=bgcv.height;if(p.y>bgcv.height)p.y=0;bgctx.beginPath();bgctx.arc(p.x,p.y,p.r,0,Math.PI*2);bgctx.fillStyle=p.col;bgctx.globalAlpha=p.a;bgctx.fill();bgctx.globalAlpha=1});requestAnimationFrame(animBG)})();
 
-
-
-// FIREBASE
 const q=query(mref,orderByChild('timestamp'),limitToLast(300));
 onValue(q,snap=>{
   const data=snap.val();
-  if(!data){
-    wall.innerHTML='';cards=[];
-    document.getElementById('tc').textContent='0';
-    document.getElementById('cc').textContent='0';
-    document.getElementById('emptystate').classList.add('show');
-    drawMap();return;
-  }
+  if(!data){document.getElementById('tc').textContent='0';document.getElementById('cc').textContent='0';if(isMobile()){document.getElementById('cardlist').innerHTML='';document.getElementById('empty').classList.add('show')}drawMap();return;}
   const newTotal=Object.keys(data).length;
   renderAll(data);
   [10,25,50,100,200,500].forEach(n=>{if(newTotal>=n&&prevTotal<n)goldExplosion(n)});
   prevTotal=newTotal;
-  checkSharedCard();
-},err=>console.error('Firebase error:',err));
+},err=>console.error('Firebase:',err));
 
-
-// Handle shared card URL
-function checkSharedCard(){
-  const params=new URLSearchParams(window.location.search);
-  const cardKey=params.get('card');
-  if(!cardKey)return;
-  setTimeout(()=>{
-    const c=cards.find(c=>c.key===cardKey);
-    if(!c)return;
-    // scroll to card
-    const rect=c.el.getBoundingClientRect();
-    ox=window.innerWidth/2-c.x-100;
-    oy=window.innerHeight/2-c.y-120;
-    wall.style.transition='transform 0.8s cubic-bezier(0.4,0,0.2,1)';
-    wall.style.transform=`translate(${ox}px,${oy}px)`;
-    setTimeout(()=>wall.style.transition='',800);
-    // highlight it
-    c.el.style.boxShadow='0 0 60px #ffffff66,0 0 120px #00e5ff33';
-    c.el.style.transform=c.el.style.transform+' scale(1.08)';
-    c.el.style.zIndex='20';
-    setTimeout(()=>{c.el.style.boxShadow='';c.el.style.transform=c.el.style.transform.replace(' scale(1.08)','');c.el.style.zIndex=''},3000);
-    showToast('Shared memory found ✦');
-  },800);
-}
-// INTRO
-setTimeout(()=>{
-  document.getElementById('intro').classList.add('hide');
-  setTimeout(()=>document.getElementById('intro').style.display='none',1000);
-},3600);
+setTimeout(()=>{const i=document.getElementById('intro');i.style.transition='opacity 1s';i.style.opacity='0';setTimeout(()=>i.style.display='none',1000)},3500);
 </script>
 </body>
 </html>
